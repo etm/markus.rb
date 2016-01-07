@@ -25,7 +25,7 @@ class Something < MarkUS
                     path_ "contact"
                     query_ do
                       term_ do
-                        element_! "contact.durchwahl", "aaa"
+                        element_! "contact.durchwahl", 1
                       end
                     end
                   end

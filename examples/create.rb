@@ -6,9 +6,8 @@ class MyClass < MarkUS
 
   def doit(items=[])
     html_ do
-      head_ 'Hallo'
-      body_ do
-        do_something
+      body_ :class => 'test' do
+        ...
       end
     end
   end

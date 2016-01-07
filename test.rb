@@ -1,7 +1,7 @@
 require './MarkUS'
 require './something'
 s = Something.new
-puts s.json! :main
+puts s.xml! :main
 
 # {                                                                                                                                                            
 #   "from": 1,
