@@ -39,7 +39,7 @@ class Common < MarkUS
   template :test1 do
     query_ [2, 3, "world"]
   end
-  template :test1 do
+  template :test2 do
     query_ :a => 2, :b => "hello"
   end
 end
