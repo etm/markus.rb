@@ -1,0 +1,9 @@
+class TestJsonChange < MarkUS
+  reload
+
+  template :main do
+    element_! do
+      query_ 54
+    end  
+  end
+end

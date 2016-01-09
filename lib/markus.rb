@@ -59,7 +59,7 @@ class MarkUS
   end
  #}}}
  
-  def element_!(name, *args, &blk) #{{{
+  def element_!(name=nil, *args, &blk) #{{{
     __markus_method_missing name, *args, &blk
   end #}}}
   def template_!(name) #{{{
@@ -214,9 +214,8 @@ class MarkUS
 
       # We look for the last string containing "<top (required)>".
       # only works in > 1.9
-
       val = "<top (required)>"
-      until require_index = strings_ary.rindex {|x| x.include?(val) }
+      until require_index = strings_ary.index {|x| x.include?(val) }
         val = "<main>"
       end
       require_string = strings_ary[require_index]
