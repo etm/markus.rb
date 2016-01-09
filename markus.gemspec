@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name             = "markus"
-  s.version          = "4.0.1"
+  s.version          = "4.0.2"
   s.platform         = Gem::Platform::RUBY
   s.license          = "LGPL-3"
   s.summary          = "MarkUS - Markup UnderScore. Quick n' dirty templating in the spirit of markaby."
 
-  s.description      = "see http://cpee.org"
+  s.description      = "MarkUS - Markup UnderScore. Quick n' dirty templating in the spirit of markaby."
 
   s.files            = Dir['{example/**/*,lib/*}'] + %w(COPYING Changelog Rakefile markus.gemspec README.md AUTHORS TODO)
   s.require_path     = 'lib'
