@@ -1,6 +1,6 @@
 # Markup UnderScore
 
-Copyright (C) 2004-2016 Jürgen Mangler <juergen.mangler@gmail.comt>
+Copyright (C) 2004-2016 Jürgen "eTM" Mangler <juergen.mangler@gmail.com>
 
 MarkUS is freely distributable according to the terms of the
 GNU Lesser General Public License 3.0 (see the file 'COPYING').
