@@ -22,12 +22,12 @@ Its fairly simple:
 2. In the templates use arbitrary code, mixed with functions that have an _ at the end. 
 3. Everything with an _ at the end is added to the result buffer
   - If the first parameter is a String or Integer it will be used as content of the element
-  - If any parameter is an Hash it will be used as attributes in XML, or you-know-what in JSON.
-  - If any parameter is an Array it will be used as you-know-what in JSON.
+  - If any parameter is a Hash it will be used as attributes in XML, or you-know-what in JSON
+  - If any parameter is an Array it will be used as you-know-what in JSON
   - If it has a block, a nested data structure is implied (see template examples below)
   - JSON only: by default a Hash is assumed, if you pass a paramter ```array```, e.g. ```value_ do |array| ... end```, the result is ```"value": [ ... ]```
   - ```#template_!``` is a special method to include other templates
-  - ```#element_!``` allows you to include stuff in your result that is a valid ruby function name (e.g. with a dot in the name - see below)
+  - ```#element_!``` allows you to include stuff in your result that is not a valid ruby function name (e.g. with a dot in the name - see below)
 4. Get the result by instantiating the class and calling one of ```#json_!```, ```#xml_!```, ```#html_!```
   - ```#xml_!``` and ```#html_!``` differ in the way elements with no content are printed. XML uses short-handed tags, HTML doesn't.
 
@@ -114,6 +114,13 @@ knows.
 
 * You need a least ruby 1.9.2
 
-## Documentation
+## Further Reading
 
-View the examples in the ./examples subdirectory.
+View the example in the ./examples subdirectory. View the tests in the ./test subdirectory. From there you should be able to figure it out yourself. Tip: neat combinations with heredocs are possible, e.g. to create script tags in html.
+
+```
+  script_ <<~end
+    var foo = "bar";
+  end
+```
+
