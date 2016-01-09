@@ -72,21 +72,21 @@ class MarkUS
     instance_eval &self.class.__markus_templates[name]
   end #}}}
 
-  def method_missing(name,*args, &blk) #{{{
+  def method_missing(name,*args, &blk) #{{{ # :nodoc:
     if name.to_s =~ /(.*)(__)$/ || name.to_s =~ /(.*)(_)$/
       __markus_method_missing $1, *args, &blk
     else
       super
     end  
   end #}}}
-  def __markus_method_missing(name,*args, &blk) #{{{
+  def __markus_method_missing(name,*args, &blk) #{{{ # :nodoc:
     if @__markus_mode == :json
       __markus_json name, *args, &blk
     else
       __markus_xml name, *args, &blk
     end
   end #}}}
-  def __markus_xml(tname,*args) #{{{
+  def __markus_xml(tname,*args) #{{{ # :nodoc:
     attrs = ""
     content = nil
     args.each do |a|
@@ -138,7 +138,7 @@ class MarkUS
       end  
     end  
   end #}}}
-  def __markus_json(tname,*args,&blk) #{{{
+  def __markus_json(tname,*args,&blk) #{{{ # :nodoc:
     attrs = nil
     content = "null"
     args.each do |a|
@@ -215,7 +215,7 @@ class MarkUS
     end  
   end #}}}
 
-  def self::inherited(subclass) #{{{
+  def self::inherited(subclass) #{{{ # :nodoc:
     subclass.instance_eval do |i|
       # This array contains strings like "/path/to/a.rb:3:in `instance_eval'".
       strings_ary = caller
@@ -244,7 +244,7 @@ class MarkUS
     self.__markus_reload = true
     self.__markus_reload_timestamp = File.stat(self.__markus_file).mtime
   end #}}}
-  def self:: __markus_do_reload  #{{{
+  def self:: __markus_do_reload  #{{{ # :nodoc:
     if self.__markus_reload && self.__markus_reload_timestamp
       if File.stat(self.__markus_file).mtime > self.__markus_reload_timestamp
         load self.__markus_file
