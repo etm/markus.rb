@@ -16,6 +16,23 @@ as well. It is inspired by _why's markaby. It supports JSON and XML.
 
 ## Usage - Jump Start
 
+Its fairly simple:
+
+1. Create classes that inherit from MarkUS, and add templates with a name to them (see below). 
+2. In the templates use arbitrary code, mixed with functions that have an _ at the end. 
+3. Everything with an _ at the end is added to the result buffer
+  - If the first parameter is a String or Integer it will be used as content of the element
+  - If any parameter is an Hash it will be used as attributes in XML, or you-know-what in JSON.
+  - If any parameter is an Array it will be used as you-know-what in JSON.
+  - If it has a block, a nested data structure is implied (see template examples below)
+  - JSON only: by default a Hash is assumed, if you pass a paramter ```array```, e.g. ```value_ do |array| ... end```, the result is ```"value": [ ... ]```
+  - ```#template_!``` is a special method to include other templates
+  - ```#element_!``` allows you to include stuff in your result that is a valid ruby function name (e.g. with a dot in the name - see below)
+4. Get the result by instantiating the class and calling one of ```#json_!```, ```#xml_!```, ```#html_!```
+  - ```#xml_!``` and ```#html_!``` differ in the way elements with no content are printed. XML uses short-handed tags, HTML doesn't.
+
+## Usage - Example
+
 template1.rb:
 ```
 class Common < MarkUS
@@ -50,7 +67,7 @@ main.rb:
   result = s.json_! :main
 ```
 
-If you add ```reload``` to any of the template class, the templates will be reloaded if they change (if templates are use in a long-running service).
+If you add ```reload``` to any of the template classes, they will be reloaded if they change (if templates are use in a long-running service).
 
 ## HTML Example Template
 
