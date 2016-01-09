@@ -214,16 +214,21 @@ class MarkUS
 
       # We look for the last string containing "<top (required)>".
       # only works in > 1.9
-      require_index = strings_ary.rindex {|x| x.include?("<top (required)>") }
+
+      val = "<top (required)>"
+      until require_index = strings_ary.rindex {|x| x.include?(val) }
+        val = "<main>"
+      end
       require_string = strings_ary[require_index]
+      filepath = File.expand_path(require_string[/^(.*):\d+:in/, 1])
+
 
       # We use a regex to extract the filepath from require_string. Other defaults.
       self.__markus_reload           = false
       self.__markus_reload_timestamp = nil
-      self.__markus_file             = require_string[/^(.*):\d+:in `<top \(required\)>'/, 1]
+      self.__markus_file             = filepath
       self.__markus_templates        = {}
       self.__markus_indent           = false
-
     end
   end #}}}
 

@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
 
   s.description      = "see http://cpee.org"
 
-  s.files            = Dir['{example/**/*,lib/*}'] + %w(COPYING Changelog Rakefile markus.gemspec README.md AUTHORS)
+  s.files            = Dir['{example/**/*,lib/*}'] + %w(COPYING Changelog Rakefile markus.gemspec README.md AUTHORS TODO)
   s.require_path     = 'lib'
   s.extra_rdoc_files = ['README.md']
   s.test_files       = Dir['{test/smartrunner.rb,test/tc_*.rb,test/*.mt_}']
