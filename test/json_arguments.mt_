@@ -1,0 +1,11 @@
+class TestJSONArguments < MarkUS
+  template :array do
+    query_ [2, 3, "world"]
+  end
+  template :hash do
+    query_ :a => 2, :b => "hello"
+  end
+  template :date do
+    query_ Time.now
+  end
+end

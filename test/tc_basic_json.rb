@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/smartrunner')
 load File.expand_path(File.dirname(__FILE__) + '/json.mt_')
+load File.expand_path(File.dirname(__FILE__) + '/json_arguments.mt_')
 
 class TestBasicJSON <  Minitest::Test
 
@@ -13,6 +14,13 @@ class TestBasicJSON <  Minitest::Test
     s = TestJSON.new
     s.__markus_indent = false
     assert s.json_!(:main) == "\"from\": 1,\"size\": 6,\"query\": {\"filtered\": {\"filter\": {\"bool\": {\"must\": [{\"bool\": {\"should\": [{\"nested\": {\"path\": \"contact\",\"query\": {\"term\": {\"contact.durchwahl\": 1}}}},{\"nested\": {\"path\": \"contact\",\"query\": {\"term\": {\"contact.durchwahl\": \"aaa\"}}}}]}}]}}}}"
+  end
+
+  def test_json_arguments
+    s = TestJSONArguments.new
+    assert s.json_!(:array) == "\"query\": [ 2, 3, \"world\" ]"
+    assert s.json_!(:hash)  == "\"query\": { \"a\": 2, \"b\": \"hello\" }"
+    assert s.json_!(:date)  =~ /"query": "\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \+\d{4}\"/
   end
 
 end

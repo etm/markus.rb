@@ -138,17 +138,17 @@ class MarkUS
     args.each do |a|
       case a
         when Array
-          attrs << "[ " + a.collect { |key,value|
+          attrs = "[ " + a.collect { |value|
             case value
               when Integer, Float
-                value.nil? ? nil : "#{value}"
+                value.nil? ? nil : value.to_s
               else
                 value.nil? ? nil : "\"#{value.to_s.gsub(/"/,'\\\"')}\""
             end
           }.compact.join(", ").strip + " ]"
           attrs = nil if attrs == "[  ]"
         when Hash
-          attrs << "{ " + a.collect { |key,value|
+          attrs = "{ " + a.collect { |key,value|
             case value
               when Integer, Float
                 value.nil? ? nil : "\"#{key}\": #{value}"
@@ -161,6 +161,8 @@ class MarkUS
           content = "\"#{a.gsub(/"/,'\\\"')}\""
         when Integer, Float
           content = a
+        else
+          content = "\"#{a.to_s}\""
       end  
     end
     if blk

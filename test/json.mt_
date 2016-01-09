@@ -1,5 +1,4 @@
 class TestJSON < MarkUS
-  reload
   indent
 
   template :common do

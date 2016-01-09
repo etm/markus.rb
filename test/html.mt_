@@ -1,5 +1,4 @@
 class TestHTML < MarkUS
-  reload
   indent
 
   template :main do
