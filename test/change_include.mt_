@@ -1,0 +1,11 @@
+load File.expand_path(File.dirname(__FILE__) + '/change_include_common.mt_')
+
+class ChangeInclude < MarkUS
+  templates ChangeIncludeCommon
+
+  indent
+
+  template :main do
+    template_! :test
+  end  
+end

@@ -1,0 +1,7 @@
+class ChangeIncludeCommon < MarkUS
+  reload
+
+  template :test do
+    query_ 64
+  end
+end

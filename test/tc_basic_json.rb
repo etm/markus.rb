@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/smartrunner')
 load File.expand_path(File.dirname(__FILE__) + '/json.mt_')
+load File.expand_path(File.dirname(__FILE__) + '/includes.mt_')
 load File.expand_path(File.dirname(__FILE__) + '/json_arguments.mt_')
 
 class TestBasicJSON <  Minitest::Test
@@ -21,6 +22,11 @@ class TestBasicJSON <  Minitest::Test
     assert s.json_!(:array) == "\"query\": [ 2, 3, \"world\" ]"
     assert s.json_!(:hash)  == "\"query\": { \"a\": 2, \"b\": \"hello\" }"
     assert s.json_!(:date)  =~ /"query": "\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \+\d{4}\"/
+  end
+
+  def test_json_includes
+    s = TestIncludes.new
+    assert s.json_!(:main) == "\"query\": [ 2, 3, \"world\" ],\n\"query\": { \"a\": 2, \"b\": \"hello\" }"
   end
 
 end

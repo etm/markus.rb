@@ -1,0 +1,12 @@
+load File.expand_path(File.dirname(__FILE__) + '/common.mt_')
+
+class TestIncludes < MarkUS
+  templates Common
+
+  indent
+
+  template :main do
+    template_! :test1
+    template_! :test2
+  end  
+end

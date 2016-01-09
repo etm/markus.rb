@@ -1,0 +1,13 @@
+class Common < MarkUS
+  indent
+
+  template :test1 do
+    query_ [2, 3, "world"]
+  end
+  template :test2 do
+    query_ :a => 2, :b => "hello"
+  end
+  template :test3 do
+    query_ Time.now
+  end
+end

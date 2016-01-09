@@ -24,6 +24,7 @@ class MarkUS
     attr_accessor :__markus_file
     attr_accessor :__markus_templates
     attr_accessor :__markus_indent
+    attr_accessor :__markus_includes
   end
 
   attr_reader :__markus_indent, :__markus_reload
@@ -50,7 +51,12 @@ class MarkUS
     @__markus_level = -1
     @__markus_parent = nil
 
-    __markus_do_reload
+    self.class.__markus_do_reload
+    self.class.__markus_includes.each do |some|
+      if some.__markus_do_reload
+        self.class.__markus_templates.merge! some.__markus_templates
+      end  
+    end
     @__markus_mode = type
 
     template_!(name)
@@ -230,6 +236,7 @@ class MarkUS
       self.__markus_file             = filepath
       self.__markus_templates        = {}
       self.__markus_indent           = false
+      self.__markus_includes         = []
     end
   end #}}}
 
@@ -237,12 +244,14 @@ class MarkUS
     self.__markus_reload = true
     self.__markus_reload_timestamp = File.stat(self.__markus_file).mtime
   end #}}}
-  def __markus_do_reload  #{{{
-    if self.class.__markus_reload && self.class.__markus_reload_timestamp
-      if File.stat(self.class.__markus_file).mtime > self.class.__markus_reload_timestamp
-        load self.class.__markus_file
+  def self:: __markus_do_reload  #{{{
+    if self.__markus_reload && self.__markus_reload_timestamp
+      if File.stat(self.__markus_file).mtime > self.__markus_reload_timestamp
+        load self.__markus_file
+        return true
       end
     end
+    false
   end #}}}
 
   def self::template(name,&p) #{{{
@@ -252,4 +261,9 @@ class MarkUS
   def self::indent #{{{
     self.__markus_indent = true
   end #}}}
+
+    def self::templates(some)
+      self.__markus_includes << some
+      self.__markus_templates.merge! some.__markus_templates
+    end
 end
