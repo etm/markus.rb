@@ -1,0 +1,17 @@
+class TestHTML < MarkUS
+  reload
+  indent
+
+  template :main do
+    html_ do
+      body_ :class => 'test' do
+        a_ 'Ruby', :href => 'https://ruby-lang.org'
+        span_ do
+          'Some Text'
+        end
+        input_ :type => 'text', :value => 'hello world'
+      end
+    end
+  end
+
+end

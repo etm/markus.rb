@@ -23,55 +23,58 @@ class MarkUS
   @@__markus_file = nil
   @@__markus_indent = false
 
-  def __markus_reload  #{{{
-    if @@__markus_reload && @@__markus_reload_timestamp
-      if File.stat(@@__markus_file).mtime > @@__markus_reload_timestamp
-        load @@__markus_file
-      end
-    end
+  attr_reader :__markus_indent, :__markus_reload
+  def __markus_indent=(value) #{{{
+    @@__markus_indent = value == true ? true : false 
+  end #}}}
+  def __markus_reload=(value) #{{{
+    @@__markus_reload = value == true ? true : false 
   end #}}}
 
-  def json!(name) #{{{
-    markus! name, :json
+  def json_!(name) #{{{
+    markus_! name, :json
   end #}}}
-  def xml!(name) #{{{
-    markus! name, :xml
+  def xml_!(name) #{{{
+    markus_! name, :xml
+  end #}}}
+  def html_!(name) #{{{
+    markus_! name, :html
   end #}}}
 
-  def markus!(name,type) #{{{
+  def markus_!(name,type) #{{{
     @__markus = []
     @__markus_buffer = []
-    @__markus_level = 0
+    @__markus_level = -1
     @__markus_parent = nil
 
     __markus_reload
     @__markus_mode = type
 
     template_!(name)
-    @__markus_buffer.last.chop!
+    @__markus_buffer.last.chop! if @__markus_mode == :json
     @@__markus_indent ? @__markus_buffer.join("\n") : @__markus_buffer.join
   end
  #}}}
-  def element_!(name, *args, &b) #{{{
-    __markus name, *args, &b
+ 
+  def element_!(name, *args, &blk) #{{{
+    __markus_method_missing name, *args, &blk
   end #}}}
   def template_!(name) #{{{
     instance_eval &@@__markus_templates[name]
   end #}}}
 
-  def method_missing(name,*args, &b) #{{{
+  def method_missing(name,*args, &blk) #{{{
     if name.to_s =~ /(.*)(__)$/ || name.to_s =~ /(.*)(_)$/
-      __markus $1, *args, &b
+      __markus_method_missing $1, *args, &blk
     else
-      p name
       super
     end  
   end #}}}
-  def __markus(name,*args, &b) #{{{
+  def __markus_method_missing(name,*args, &blk) #{{{
     if @__markus_mode == :json
-      __markus_json name, *args, &b
+      __markus_json name, *args, &blk
     else
-      __markus_xml name, *args, &b
+      __markus_xml name, *args, &blk
     end
   end #}}}
   def __markus_xml(tname,*args) #{{{
@@ -111,7 +114,7 @@ class MarkUS
       end  
       @__markus_level -= 1
     else
-      if @__markus_xml && content.nil?
+      if @__markus_mode == :xml && content.nil?
         if @@__markus_indent
           @__markus_buffer << "#{"  " * (@__markus_level+1)}<#{tname}#{attrs}/>"
         else
@@ -126,7 +129,7 @@ class MarkUS
       end  
     end  
   end #}}}
-  def __markus_json(tname,*args,&bl) #{{{
+  def __markus_json(tname,*args,&blk) #{{{
     attrs = nil
     content = "null"
     args.each do |a|
@@ -157,7 +160,7 @@ class MarkUS
           content = a
       end  
     end
-    if bl
+    if blk
       @__markus_level += 1
       mpsic = @__markus_parent
       if mpsic == :a
@@ -167,7 +170,7 @@ class MarkUS
         else  
           @__markus_buffer << "{"
         end
-        __markus_json tname, *args, &bl
+        __markus_json tname, *args, &blk
         @__markus_buffer.last.chop!
         if @@__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}},"
@@ -175,13 +178,13 @@ class MarkUS
           @__markus_buffer << "},"
         end
       else 
-        @__markus_parent = type = bl.parameters.length == 1 && bl.parameters[0][1] == :array ? :a : :h
+        @__markus_parent = type = blk.parameters.length == 1 && blk.parameters[0][1] == :array ? :a : :h
         if @@__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}#{tname.nil? ? '' : "\"#{tname}\": "}#{type == :a ? '[' : '{'}"
         else  
           @__markus_buffer << "#{tname.nil? ? '' : "\"#{tname}\": "}#{type == :a ? '[' : '{'}"
         end
-        res = bl.call
+        res = blk.call
         @__markus_buffer << res + ',' if type == :a && res.is_a?(String)
         @__markus_buffer.last.chop!
         if @@__markus_indent
@@ -223,6 +226,14 @@ class MarkUS
     @@__markus_reload = true
     @@__markus_reload_timestamp = File.stat(@@__markus_file).mtime
   end #}}}
+  def __markus_reload  #{{{
+    if @@__markus_reload && @@__markus_reload_timestamp
+      if File.stat(@@__markus_file).mtime > @@__markus_reload_timestamp
+        load @@__markus_file
+      end
+    end
+  end #}}}
+
   def self::template(name,&p) #{{{
     @@__markus_templates ||= {}
     @@__markus_templates[name] = p

@@ -1,7 +1,7 @@
-require './MarkUS'
+require './lib/markus'
 require './something'
 s = Something.new
-puts s.xml! :main
+puts s.json! :main
 
 # {                                                                                                                                                            
 #   "from": 1,

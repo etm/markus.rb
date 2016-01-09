@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.files            = Dir['{example/**/*,lib/*}'] + %w(COPYING Changelog Rakefile markus.gemspec README.md AUTHORS)
   s.require_path     = 'lib'
   s.extra_rdoc_files = ['README.md']
-  s.test_files       = Dir['{test/*,test/*/tc_*.rb}']
+  s.test_files       = Dir['{test/smartrunner.rb,test/tc_*.rb,test/*.mt_}']
 
   s.required_ruby_version = '>=1.9.3'
 
