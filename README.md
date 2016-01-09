@@ -10,8 +10,8 @@ This program is distributed without any warranty. See the file
 
 ## Introduction
 
-All template libraries suck. But sometimes they are useful, for building
-quick'n dirty creation of documents. This template library will of course suck
+All template libraries suck. But sometimes they are useful, for 
+quick'n dirty building of documents. This template library will of course suck
 as well. It is inspired by _why's markaby. It supports JSON and XML.
 
 ## Usage - Jump Start
