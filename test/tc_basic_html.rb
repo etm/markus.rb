@@ -6,7 +6,6 @@ class TestBasicHTML <  Minitest::Test
   def test_xml
     s = TestHTML.new
     s.__markus_indent = true
-    p s.xml_!(:main)
     assert s.xml_!(:main) == "<html>\n  <body class=\"test\">\n    <a href=\"https://ruby-lang.org\">Ruby</a>\n    <span>\nSome Text\n    </span>\n    <input type=\"text\" value=\"hello world\"/>\n  </body>\n</html>"
   end
 
