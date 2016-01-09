@@ -8,6 +8,8 @@ class TestHTML < MarkUS
         span_ do
           'Some Text'
         end
+        span_ 'Some Text'
+        span_ @a
         input_ :type => 'text', :value => 'hello world'
       end
     end

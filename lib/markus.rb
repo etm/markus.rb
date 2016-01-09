@@ -35,21 +35,25 @@ class MarkUS
     self.class.__markus_reload = value == true ? true : false 
   end #}}}
 
-  def json_!(name) #{{{
-    markus_! name, :json
+  def json_!(name,params={}) #{{{
+    markus_! name, :json, params
   end #}}}
-  def xml_!(name) #{{{
-    markus_! name, :xml
+  def xml_!(name,params={}) #{{{
+    markus_! name, :xml, params
   end #}}}
-  def html_!(name) #{{{
-    markus_! name, :html
+  def html_!(name,params={}) #{{{
+    markus_! name, :html, params
   end #}}}
 
-  def markus_!(name,type) #{{{
+  def markus_!(name,type,params={}) #{{{
     @__markus = []
     @__markus_buffer = []
     @__markus_level = -1
     @__markus_parent = nil
+
+    params.each do |k,v|
+      self.instance_variable_set(("@" + k.to_s).to_sym, v)
+    end if params.is_a? Hash
 
     self.class.__markus_do_reload
     self.class.__markus_includes.each do |some|
