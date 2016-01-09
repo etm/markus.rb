@@ -1,11 +1,11 @@
 # Markup UnderScore
 
-Copyright (C) 2004-2016 Jürgen Mangler <juergen.mangler@univie.ac.at>
+Copyright (C) 2004-2016 Jürgen Mangler <juergen.mangler@gmail.comt>
 
 MarkUS is freely distributable according to the terms of the
-GNU Lesser General Public License (see the file 'COPYING').
+GNU Lesser General Public License 3.0 (see the file 'COPYING').
 
-This program is distributed without any warranty. See the file
+This code is distributed without any warranty. See the file
 'COPYING' for details.
 
 ## Introduction
