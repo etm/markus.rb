@@ -14,6 +14,44 @@ All template libraries suck. But sometimes they are useful, for building
 quick'n dirty creation of documents. This template library will of course suck
 as well. It is inspired by _why's markaby. It supports JSON and XML.
 
+## Usage - Jump Start
+
+template1.rb:
+```
+class Common < MarkUS
+  template :test1 do
+    query_ [2, 3, "world"]
+  end
+  template :test1 do
+    query_ :a => 2, :b => "hello"
+  end
+end
+```
+
+template2.rb:
+```
+require File.expand_path(File.dirname(__FILE__) + '/template1')
+class Something < MarkUS
+  templates Common                                                                                                                                                                                                                                                   
+
+  indent
+
+  template :main do
+    template_! :test1
+    template_! :test2
+  end
+end
+```
+
+main.rb:
+```
+  require File.expand_path(File.dirname(__FILE__) + '/template2')
+  s = Something.new
+  result = s.json_! :main
+```
+
+If you add ```reload``` to any of the template class, the templates will be reloaded if they change (if templates are use in a long-running service).
+
 ## HTML Example Template
 
 ```
