@@ -10,7 +10,7 @@ This code is distributed without any warranty. See the file
 
 ## Introduction
 
-All template libraries suck. But sometimes they are useful, for 
+All template libraries suck. But sometimes they are useful, for
 quick n' dirty building of documents. This template library will of course suck
 as well. It is inspired by _why's markaby. It supports JSON and XML.
 
@@ -18,8 +18,8 @@ as well. It is inspired by _why's markaby. It supports JSON and XML.
 
 Its fairly simple:
 
-1. Create classes that inherit from MarkUS, and add templates with a name to them (see below). 
-2. In the templates use arbitrary code, mixed with functions that have an _ at the end. 
+1. Create classes that inherit from MarkUS, and add templates with a name to them (see below).
+2. In the templates use arbitrary code, mixed with functions that have an _ at the end.
 3. Everything with an _ at the end is added to the result buffer
   - If the first parameter is a String or Integer it will be used as content of the element
   - If any parameter is a Hash it will be used as attributes in XML, or you-know-what in JSON
@@ -55,7 +55,7 @@ template2.rb:
 require File.expand_path(File.dirname(__FILE__) + '/template1')
 
 class Something < MarkUS
-  templates Common                                                                                                                                                                                                                                                   
+  templates Common
 
   indent
 
