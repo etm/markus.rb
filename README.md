@@ -25,13 +25,13 @@ Its fairly simple:
   - If any parameter is a Hash it will be used as attributes in XML, or you-know-what in JSON
   - If any parameter is an Array it will be used as you-know-what in JSON
   - If it has a block, a nested data structure is implied (see template examples below)
-  - JSON only: by default a Hash is assumed, if you pass a paramter ```array```, e.g. ```value_ do |array| ... end```, the result is ```"value": [ ... ]```
-  - ```#template_!``` is a special method to include other templates
-  - ```#element_!``` allows you to include stuff in your result that is not a valid ruby function name (e.g. with a dot in the name - see below)
-4. Get the result by instantiating the class and calling one of ```#json_!```, ```#xml_!```, ```#html_!```
-  - ```#xml_!``` and ```#html_!``` differ in the way elements with no content are printed. XML uses short-handed tags, HTML doesn't.
+  - JSON only: by default a Hash is assumed, if you pass a paramter `array`, e.g. `value_ do |array| ... end`, the result is `"value": [ ... ]`
+  - `#template_!` is a special method to include other templates
+  - `#element_!` allows you to include stuff in your result that is not a valid ruby function name (e.g. with a dot in the name - see below)
+4. Get the result by instantiating the class and calling one of `#json_!`, `#xml_!`, `#html_!`
+  - `#xml_!` and `#html_!` differ in the way elements with no content are printed. XML uses short-handed tags, HTML doesn't.
 
-```#json_!```, ```#xml_!``` and ```#html_!``` need the name of the template as
+`#json_!`, `#xml_!` and `#html_!` need the name of the template as
 the first parameter, optional you can pass a hash. All pairs in the hash are
 available as instance variables. Of course you can also handle it yourself through a
 constructor in the template class.
@@ -39,7 +39,7 @@ constructor in the template class.
 ## Usage - Example
 
 template1.rb:
-```
+```ruby
 class Common < MarkUS
   template :test1 do
     query_ [2, 3, @w]
@@ -51,7 +51,7 @@ end
 ```
 
 template2.rb:
-```
+```ruby
 require File.expand_path(File.dirname(__FILE__) + '/template1')
 
 class Something < MarkUS
@@ -67,7 +67,7 @@ end
 ```
 
 main.rb:
-```
+```ruby
   require 'markus'
   require File.expand_path(File.dirname(__FILE__) + '/template2')
   s = Something.new
@@ -75,13 +75,13 @@ main.rb:
   puts result
 ```
 
-If you add ```reload``` to any of the template classes, they will be reloaded if they change (if templates are use in a long-running service).
+If you add `reload` to any of the template classes, they will be reloaded if they change (if templates are use in a long-running service).
 
 
 
 ## HTML Example Template
 
-```
+```ruby
 html_ do
   body_ :class => 'test' do
     a_ 'Ruby', :href => 'https://ruby-lang.org'
@@ -94,7 +94,7 @@ end
 
 ## JSON Example Template
 
-```
+```ruby
 query_ do
   filtered_ do
     filter_ do
@@ -128,7 +128,7 @@ knows.
 
 View the example in the ./examples subdirectory. View the tests in the ./test subdirectory. From there you should be able to figure it out yourself. Tip: neat combinations with heredocs are possible, e.g. to create script tags in html.
 
-```
+```ruby
   script_ <<~end
     var foo = "bar";
   end
