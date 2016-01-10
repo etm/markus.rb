@@ -31,16 +31,21 @@ Its fairly simple:
 4. Get the result by instantiating the class and calling one of ```#json_!```, ```#xml_!```, ```#html_!```
   - ```#xml_!``` and ```#html_!``` differ in the way elements with no content are printed. XML uses short-handed tags, HTML doesn't.
 
+```#json_!```, ```#xml_!``` and ```#html_!``` need the name of the template as
+the first parameter, optional you can pass a hash. All pairs in the hash are
+available as instance variables. Of course you can also handle it yourself through a
+constructor in the template class.
+
 ## Usage - Example
 
 template1.rb:
 ```
 class Common < MarkUS
   template :test1 do
-    query_ [2, 3, "world"]
+    query_ [2, 3, @w]
   end
   template :test2 do
-    query_ :a => 2, :b => "hello"
+    query_ :a => 2, :b => @h
   end
 end
 ```
@@ -48,6 +53,7 @@ end
 template2.rb:
 ```
 require File.expand_path(File.dirname(__FILE__) + '/template1')
+
 class Something < MarkUS
   templates Common                                                                                                                                                                                                                                                   
 
@@ -62,12 +68,16 @@ end
 
 main.rb:
 ```
+  require 'markus'
   require File.expand_path(File.dirname(__FILE__) + '/template2')
   s = Something.new
-  result = s.json_! :main
+  result = s.json_! :main, :h => 'hello', :w => 'world'
+  puts result
 ```
 
 If you add ```reload``` to any of the template classes, they will be reloaded if they change (if templates are use in a long-running service).
+
+
 
 ## HTML Example Template
 
