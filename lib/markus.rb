@@ -64,7 +64,7 @@ class MarkUS
     @__markus_mode = type
 
     template_!(name)
-    @__markus_buffer.last.chop! if @__markus_mode == :json
+    @__markus_buffer.last.chomp!(',') if @__markus_mode == :json
     self.class.__markus_indent ? @__markus_buffer.join("\n") : @__markus_buffer.join
   end
  #}}}
@@ -156,7 +156,7 @@ class MarkUS
                 value.nil? ? nil : "\"#{value.to_s.gsub(/"/,'\\\"')}\""
             end
           }.compact.join(", ").strip + " ]"
-          attrs = nil if attrs == "[  ]"
+          attrs = '[]' if attrs == "[  ]"
         when Hash
           attrs = "{ " + a.collect { |key,value|
             case value
@@ -166,7 +166,7 @@ class MarkUS
                 value.nil? ? nil : "\"#{key}\": \"#{value.to_s.gsub(/"/,'\\\"')}\""
             end
           }.compact.join(", ").strip + " }"
-          attrs = nil if attrs == "{  }"
+          attrs = '{}' if attrs == "{  }"
         when String
           content = "\"#{a.gsub(/"/,'\\\"')}\""
         when Integer, Float
@@ -186,7 +186,7 @@ class MarkUS
           @__markus_buffer << "{"
         end
         __markus_json tname, *args, &blk
-        @__markus_buffer.last.chop!
+        @__markus_buffer.last.chomp!(',')
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}},"
         else  
@@ -199,13 +199,20 @@ class MarkUS
         else  
           @__markus_buffer << "#{tname.nil? ? '' : "\"#{tname}\": "}#{type == :a ? '[' : '{'}"
         end
+
+        c1 = @__markus_buffer.length
         res = blk.call
-        @__markus_buffer << res + ',' if type == :a && res.is_a?(String)
-        @__markus_buffer.last.chop!
-        if self.class.__markus_indent
-          @__markus_buffer << "#{"  " * @__markus_level}#{type == :a ? ']' : '}'},"
-        else
-          @__markus_buffer << "#{type == :a ? ']' : '}'},"
+        c2 = @__markus_buffer.length
+        if c1 == c2 
+          @__markus_buffer.last << "#{type == :a ? ']' : '}'},"
+        else  
+          @__markus_buffer << res + ',' if type == :a && res.is_a?(String)
+          @__markus_buffer.last.chomp!(',')
+          if self.class.__markus_indent
+            @__markus_buffer << "#{"  " * @__markus_level}#{type == :a ? ']' : '}'},"
+          else
+            @__markus_buffer << "#{type == :a ? ']' : '}'},"
+          end  
         end  
       end
       @__markus_level -= 1
