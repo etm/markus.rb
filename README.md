@@ -42,10 +42,10 @@ template1.rb:
 ```ruby
 class Common < MarkUS
   template :test1 do
-    query_ [2, 3, @w]
+    query1_ [2, 3, @w]
   end
   template :test2 do
-    query_ :a => 2, :b => @h
+    query2_ :a => 2, :b => @h
   end
 end
 ```
