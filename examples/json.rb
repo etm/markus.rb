@@ -7,6 +7,9 @@ class MyClass < MarkUS
     query_ do
       match_all_ {}
     end
+    query_ do
+      match_ "NONE" => "NONE"
+    end
   end
 end
 
