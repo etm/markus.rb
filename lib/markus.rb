@@ -218,24 +218,24 @@ class MarkUS
       @__markus_level -= 1
       @__markus_parent = mpsic
     else
-      if mpsic == :a
+      if @__markus_parent == :a
+        @__markus_level += 1
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}{"
         else  
           @__markus_buffer << "{"
         end
-        @__markus_level += 1
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * (@__markus_level+1)}\"#{tname}\": #{attrs || content}"
         else
           @__markus_buffer << "\"#{tname}\": #{attrs || content}"
         end
-        @__markus_level -= 1
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}},"
         else  
           @__markus_buffer << "},"
         end
+        @__markus_level -= 1
       else  
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * (@__markus_level+1)}\"#{tname}\": #{attrs || content}," 
