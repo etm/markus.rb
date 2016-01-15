@@ -72,8 +72,8 @@ class MarkUS
   def element_!(name=nil, *args, &blk) #{{{
     __markus_method_missing name, *args, &blk
   end #}}}
-  def template_!(name) #{{{
-    instance_eval &self.class.__markus_templates[name]
+  def template_!(name,*args) #{{{
+    instance_exec *args, &self.class.__markus_templates[name]
   end #}}}
 
   def method_missing(name,*args, &blk) #{{{ # :nodoc:

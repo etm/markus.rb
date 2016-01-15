@@ -3,7 +3,7 @@ class TestJsonChange < MarkUS
 
   template :main do
     element_! do
-      query_ 60
+      query_ 62
     end  
   end
 end
