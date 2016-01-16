@@ -29,10 +29,10 @@ class MarkUS
 
   attr_reader :__markus_indent, :__markus_reload
   def __markus_indent=(value) #{{{
-    self.class.__markus_indent = value == true ? true : false 
+    self.class.__markus_indent = value == true ? true : false
   end #}}}
   def __markus_reload=(value) #{{{
-    self.class.__markus_reload = value == true ? true : false 
+    self.class.__markus_reload = value == true ? true : false
   end #}}}
 
   def json_!(name,params={}) #{{{
@@ -59,7 +59,7 @@ class MarkUS
     self.class.__markus_includes.each do |some|
       if some.__markus_do_reload
         self.class.__markus_templates.merge! some.__markus_templates
-      end  
+      end
     end
     @__markus_mode = type
 
@@ -68,7 +68,7 @@ class MarkUS
     self.class.__markus_indent ? @__markus_buffer.join("\n") : @__markus_buffer.join
   end
  #}}}
- 
+
   def element_!(name=nil, *args, &blk) #{{{
     __markus_method_missing name, *args, &blk
   end #}}}
@@ -81,7 +81,7 @@ class MarkUS
       __markus_method_missing $1, *args, &blk
     else
       super
-    end  
+    end
   end #}}}
   def __markus_method_missing(name,*args, &blk) #{{{ # :nodoc:
     if @__markus_mode == :json
@@ -99,18 +99,20 @@ class MarkUS
           attrs << " " + a.collect { |key,value|
             value.nil? ? nil : "#{key}=\"#{value.to_s.gsub(/"/,"&#34;")}\""
           }.compact.join(" ")
-        when String,Integer
+        when String
+          content = a.gsub(/\&(?!amp;|quot;|apos;|gt;|lt;)/,"&amp;").gsub(/\"/,"&quot;").gsub(/>/,"&gt;").gsub(/</,"&lt;").gsub(/'/,"&apos;")
+        when Integer
           content = a
-      end  
+      end
     end
     attrs = '' if attrs == ' '
     if block_given?
       @__markus_level += 1
       if self.class.__markus_indent
         @__markus_buffer << "#{"  " * @__markus_level}<#{tname}#{attrs}>"
-      else  
+      else
         @__markus_buffer << "<#{tname}#{attrs}>"
-      end  
+      end
       unless content.nil?
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * (@__markus_level+1)}#{content}"
@@ -124,7 +126,7 @@ class MarkUS
         @__markus_buffer << "#{"  " * @__markus_level}</#{tname}>"
       else
         @__markus_buffer << "</#{tname}>"
-      end  
+      end
       @__markus_level -= 1
     else
       if @__markus_mode == :xml && content.nil?
@@ -135,12 +137,12 @@ class MarkUS
         end
       else
         if self.class.__markus_indent
-          @__markus_buffer << "#{"  " * (@__markus_level+1)}<#{tname}#{attrs}>#{content}</#{tname}>" 
+          @__markus_buffer << "#{"  " * (@__markus_level+1)}<#{tname}#{attrs}>#{content}</#{tname}>"
         else
-          @__markus_buffer << "<#{tname}#{attrs}>#{content}</#{tname}>" 
+          @__markus_buffer << "<#{tname}#{attrs}>#{content}</#{tname}>"
         end
-      end  
-    end  
+      end
+    end
   end #}}}
   def __markus_json(tname,*args,&blk) #{{{ # :nodoc:
     attrs = nil
@@ -173,7 +175,7 @@ class MarkUS
           content = a
         else
           content = "\"#{a.to_s}\""
-      end  
+      end
     end
     if blk
       @__markus_level += 1
@@ -182,38 +184,38 @@ class MarkUS
         @__markus_parent = nil
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}{"
-        else  
+        else
           @__markus_buffer << "{"
         end
         __markus_json tname, *args, &blk
         @__markus_buffer.last.chomp!(',')
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}},"
-        else  
+        else
           @__markus_buffer << "},"
         end
-      else 
+      else
         @__markus_parent = type = blk.parameters.length == 1 && blk.parameters[0][1] == :array ? :a : :h
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}#{tname.nil? ? '' : "\"#{tname}\": "}#{type == :a ? '[' : '{'}"
-        else  
+        else
           @__markus_buffer << "#{tname.nil? ? '' : "\"#{tname}\": "}#{type == :a ? '[' : '{'}"
         end
 
         c1 = @__markus_buffer.length
         res = blk.call
         c2 = @__markus_buffer.length
-        if c1 == c2 
+        if c1 == c2
           @__markus_buffer.last << "#{type == :a ? ']' : '}'},"
-        else  
+        else
           @__markus_buffer << res + ',' if type == :a && res.is_a?(String)
           @__markus_buffer.last.chomp!(',')
           if self.class.__markus_indent
             @__markus_buffer << "#{"  " * @__markus_level}#{type == :a ? ']' : '}'},"
           else
             @__markus_buffer << "#{type == :a ? ']' : '}'},"
-          end  
-        end  
+          end
+        end
       end
       @__markus_level -= 1
       @__markus_parent = mpsic
@@ -222,7 +224,7 @@ class MarkUS
         @__markus_level += 1
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}{"
-        else  
+        else
           @__markus_buffer << "{"
         end
         if self.class.__markus_indent
@@ -232,18 +234,18 @@ class MarkUS
         end
         if self.class.__markus_indent
           @__markus_buffer << "#{"  " * @__markus_level}},"
-        else  
+        else
           @__markus_buffer << "},"
         end
         @__markus_level -= 1
-      else  
+      else
         if self.class.__markus_indent
-          @__markus_buffer << "#{"  " * (@__markus_level+1)}\"#{tname}\": #{attrs || content}," 
+          @__markus_buffer << "#{"  " * (@__markus_level+1)}\"#{tname}\": #{attrs || content},"
         else
-          @__markus_buffer << "\"#{tname}\": #{attrs || content}," 
+          @__markus_buffer << "\"#{tname}\": #{attrs || content},"
         end
-      end  
-    end  
+      end
+    end
   end #}}}
 
   def self::inherited(subclass) #{{{ # :nodoc:

@@ -2,6 +2,6 @@ class ChangeIncludeCommon < MarkUS
   reload
 
   template :test do
-    query_ 104
+    query_ 105
   end
 end
