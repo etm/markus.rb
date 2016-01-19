@@ -15,6 +15,7 @@ class TestJSON < MarkUS
             must_ do |array|
               bool_ do
                 should_ do |array|
+                  value_! "_score"
                   nested_ do
                     path_ "contact"
                     query_ do

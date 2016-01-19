@@ -72,6 +72,24 @@ class MarkUS
   def element_!(name=nil, *args, &blk) #{{{
     __markus_method_missing name, *args, &blk
   end #}}}
+  def value_!(val) #{{{
+    case val
+      when String
+        content = "\"#{val.gsub(/"/,'\\\"')}\""
+      when Integer, Float
+        content = val
+      else
+        content = "null"
+    end
+    @__markus_level += 1
+    if self.class.__markus_indent
+      @__markus_buffer << "#{"  " * @__markus_level}#{content},"
+    else
+      @__markus_buffer << "#{content},"
+    end
+    @__markus_level -= 1
+    nil
+  end #}}}
   def template_!(name,*args) #{{{
     instance_exec *args, &self.class.__markus_templates[name]
   end #}}}
