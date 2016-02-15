@@ -286,7 +286,7 @@ class MarkUS
       self.__markus_reload_timestamp = nil
       self.__markus_file             = filepath
       self.__markus_templates        = {}
-      self.__markus_indent           = false
+      self.__markus_indent           = self.class_variable_defined?(:@@__markus_indent) ? @@__markus_indent : false
       self.__markus_includes         = []
     end
   end #}}}
@@ -310,11 +310,15 @@ class MarkUS
     self.__markus_templates[name] = p
   end #}}}
   def self::indent #{{{
-    self.__markus_indent = true
+    if self.__markus_indent.nil?
+      @@__markus_indent = true
+    else
+      self.__markus_indent = true
+    end
   end #}}}
 
-    def self::templates(some)
-      self.__markus_includes << some
-      self.__markus_templates.merge! some.__markus_templates
-    end
+  def self::templates(some)
+    self.__markus_includes << some
+    self.__markus_templates.merge! some.__markus_templates
+  end
 end
