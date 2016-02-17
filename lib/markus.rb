@@ -17,6 +17,8 @@
 # Markup UnderScore
 # ----   -    -
 
+require 'escape_utils'
+
 class MarkUS
   class << self
     attr_accessor :__markus_reload
@@ -118,7 +120,7 @@ class MarkUS
             value.nil? ? nil : "#{key}=\"#{value.to_s.gsub(/"/,"&#34;")}\""
           }.compact.join(" ")
         when String
-          content = a.gsub(/\&(?!amp;|quot;|apos;|gt;|lt;)/,"&amp;").gsub(/\"/,"&quot;").gsub(/>/,"&gt;").gsub(/</,"&lt;").gsub(/'/,"&apos;")
+          content = EscapeUtils.escape_html(a)
         when Integer
           content = a
       end

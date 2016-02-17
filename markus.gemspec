@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name             = "markus"
-  s.version          = "4.0.14"
+  s.version          = "4.0.15"
   s.platform         = Gem::Platform::RUBY
   s.license          = "LGPL-3"
   s.summary          = "MarkUS - Markup UnderScore. Quick n' dirty templating in the spirit of markaby."
@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.homepage         = 'https://github.com/etm/markus.rb'
 
   s.add_runtime_dependency 'minitest',  '~> 5.8'
+  s.add_runtime_dependency 'escape_utils',  '~> 1.2'
 end
