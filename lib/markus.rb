@@ -29,6 +29,8 @@ class MarkUS
     attr_accessor :__markus_includes
   end
 
+  class MarkUSString < String; end
+
   attr_reader :__markus_indent, :__markus_reload
   def __markus_indent=(value) #{{{
     self.class.__markus_indent = value == true ? true : false
@@ -172,7 +174,7 @@ class MarkUS
           }.compact.join(", ").strip + " }"
           attrs = '{}' if attrs == "{  }"
         when String
-          content = "\"#{a.gsub(/"/,'\\\"')}\""
+          content = a.class == ::MarkUS::MarkUSString ? a : "\"#{a.gsub(/"/,'\\\"')}\""
         when Integer, Float
           content = a
         else
@@ -192,8 +194,8 @@ class MarkUS
       @__markus_parent = nil
 
       @__markus_buffer << __markus_indent + "\"#{tname}\": {"
-      __markus_json "attributes", attrs if attrs
-      __markus_json "value", content if content
+      __markus_json "attributes", ::MarkUS::MarkUSString.new(attrs) if attrs
+      __markus_json "value", ::MarkUS::MarkUSString.new(content) if content
       __markus_json "content", &blk if blk
       @__markus_buffer.last.chomp!(',')
       @__markus_buffer << __markus_indent + "},"
