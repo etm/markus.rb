@@ -185,6 +185,7 @@ class MarkUS
 
     if mpsic == :a
       @__markus_buffer << __markus_indent + "{"
+      @__markus_level += 1
     end  
 
     if [content, attrs, blk].compact.length > 1
@@ -201,7 +202,6 @@ class MarkUS
         if mpsic == :a && !tname.nil?
           @__markus_parent = nil
           __markus_json tname, *args, &blk
-          @__markus_buffer.last.chomp!(',')
         else
           @__markus_parent = type = blk.parameters.length == 1 && blk.parameters[0][1] == :array ? :a : :h
           @__markus_buffer << __markus_indent + "#{tname.nil? ? '' : "\"#{tname}\": "}#{type == :a ? '[' : '{'}"
@@ -223,6 +223,8 @@ class MarkUS
     end
 
     if mpsic == :a
+      @__markus_buffer.last.chomp!(',')
+      @__markus_level -= 1
       @__markus_buffer << __markus_indent + "},"
     end
 
