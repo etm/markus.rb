@@ -127,8 +127,7 @@ maybe not. Who knows.
 
 ## Installation
 
-* You need a least ruby 1.9.2
-* gem install markus.rb
+* You need a least ruby 1.9.3
 
 ## Further Reading
 
