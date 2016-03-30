@@ -46,9 +46,6 @@ class MarkUS
   def html_!(name,params={}) #{{{
     markus_! name, :html, params
   end #}}}
-  def html_json_!(name,params={}) #{{{
-    markus_! name, :html_json, params
-  end #}}}
 
   def markus_!(name,type,params={}) #{{{
     @__markus = []
@@ -69,7 +66,7 @@ class MarkUS
     @__markus_mode = type
 
     template_!(name)
-    @__markus_buffer.last.chomp!(',') if @__markus_mode == :json || @__markus_mode == :html_json
+    @__markus_buffer.last.chomp!(',') if @__markus_mode == :json
     self.class.__markus_indent ? @__markus_buffer.join("\n") : @__markus_buffer.join
   end
  #}}}
@@ -114,8 +111,6 @@ class MarkUS
     case @__markus_mode
       when :json
         __markus_json name, *args, &blk
-      when :html_json
-        __markus_html_json name, *args, &blk
       else
         __markus_xml name, *args, &blk
     end
@@ -221,7 +216,7 @@ class MarkUS
     @__markus_parent = mpsic
     @__markus_level -= 1
   end #}}}
-  def __markus_html_json(tname,*args,&blk) #{{{ # :nodoc:
+  def __markus_json(tname,*args,&blk) #{{{ # :nodoc:
     attrs = content = nil
     args.each do |a|
       case a
