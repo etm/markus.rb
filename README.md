@@ -2,17 +2,23 @@
 
 Copyright (C) 2004-2016 Jürgen "eTM" Mangler <juergen.mangler@gmail.com>
 
-MarkUS is freely distributable according to the terms of the
-GNU Lesser General Public License 3.0 (see the file 'COPYING').
+MarkUS is freely distributable according to the terms of the GNU Lesser General
+Public License 3.0 (see the file 'COPYING').
 
-This code is distributed without any warranty. See the file
-'COPYING' for details.
+This code is distributed without any warranty. See the file 'COPYING' for
+details.
 
 ## Introduction
 
-All template libraries suck. But sometimes they are useful, for
-quick n' dirty building of documents. This template library will of course suck
-as well. It is inspired by _why's markaby. It supports JSON and XML.
+All template libraries suck. But sometimes they are useful, for quick n' dirty
+building of documents. This template library will of course suck as well. It is
+inspired by _why's markaby. It supports JSON and XML. 
+
+## Possible Applications
+
+It can be used for better handling of big elasticsearch querys (json), for
+creating html documents, or for stuff that ought to return json, xml, or
+switchable json<=>xml.
 
 ## Usage - Jump Start
 
@@ -75,9 +81,8 @@ main.rb:
   puts result
 ```
 
-If you add `reload` to any of the template classes, they will be reloaded if they change (if templates are use in a long-running service).
-
-
+If you add `reload` to any of the template classes, they will be reloaded if
+they change (if templates are use in a long-running service).
 
 ## HTML Example Template
 
@@ -116,21 +121,24 @@ end
 ```
 
 Why the f**k would i use a template library for JSON when i can just create a
-big hash or array and create a json out of it? If you ever find yourself feeling bad or
-lost with your big hashes, try this out. Maybe you like it, maybe not. Who
-knows.
+big hash or array and create a json out of it? If you ever find yourself
+feeling bad or lost with your big hashes, try this out. Maybe you like it,
+maybe not. Who knows.
 
 ## Installation
 
 * You need a least ruby 1.9.2
+* gem install markus.rb
 
 ## Further Reading
 
-View the example in the ./examples subdirectory. View the tests in the ./test subdirectory. From there you should be able to figure it out yourself. Tip: neat combinations with heredocs are possible, e.g. to create script tags in html.
+View the example in the ./examples subdirectory. View the tests in the ./test
+subdirectory. From there you should be able to figure it out yourself. Tip:
+neat combinations with heredocs are possible, e.g. to create script tags in
+html.
 
 ```ruby
   script_ <<~end
     var foo = "bar";
   end
 ```
-
