@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name             = "markus"
-  s.version          = "4.0.19"
+  s.version          = "4.0.20"
   s.platform         = Gem::Platform::RUBY
   s.license          = "LGPL-3"
   s.summary          = "MarkUS - Markup UnderScore. Quick n' dirty templating in the spirit of markaby."

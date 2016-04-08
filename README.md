@@ -45,6 +45,7 @@ constructor in the template class.
 ## Usage - Example
 
 template1.rb:
+
 ```ruby
 class Common < MarkUS
   template :test1 do
@@ -57,6 +58,7 @@ end
 ```
 
 template2.rb:
+
 ```ruby
 require File.expand_path(File.dirname(__FILE__) + '/template1')
 
@@ -73,6 +75,7 @@ end
 ```
 
 main.rb:
+
 ```ruby
   require 'markus'
   require File.expand_path(File.dirname(__FILE__) + '/template2')
