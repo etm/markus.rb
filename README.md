@@ -85,7 +85,7 @@ main.rb:
 ```
 
 If you add `reload` to any of the template classes, they will be reloaded if
-they change (if templates are use in a long-running service).
+they change (if templates are used in a long-running service).
 
 ## HTML Example Template
 
