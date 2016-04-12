@@ -27,19 +27,24 @@ class TestJSON < MarkUS
 
                   nested_ do
                     path_ "contact"
-                    query_ do 
+                    query_ do
                       term_ do
                         element_! "contact.durchwahl", "aaa"
                       end
                     end
                   end
-  
+
+                  element_! do
+                    weight_ 1
+                    filter_ {}
+                  end
+
                 end
               end
             end
-          end       
+          end
         end
       end
-    end    
+    end
   end
 end

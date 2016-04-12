@@ -8,13 +8,13 @@ class TestBasicJSON <  Minitest::Test
   def test_json
     s = TestJSON.new
     s.__markus_indent = true
-    assert s.json_!(:main) == "\"from\": 1,\n\"size\": 6,\n\"query\": {\n  \"filtered\": {\n    \"filter\": {\n      \"bool\": {\n        \"must\": [\n          {\n            \"bool\": {\n              \"should\": [\n                \"_score\",\n                {\n                  \"nested\": {\n                    \"path\": \"contact\",\n                    \"query\": {\n                      \"term\": {\n                        \"contact.durchwahl\": 1\n                      }\n                    }\n                  }\n                },\n                {\n                  \"nested\": {\n                    \"path\": \"contact\",\n                    \"query\": {\n                      \"term\": {\n                        \"contact.durchwahl\": \"aaa\"\n                      }\n                    }\n                  }\n                }\n              ]\n            }\n          }\n        ]\n      }\n    }\n  }\n}"
+    assert s.json_!(:main) == "\"from\": 1,\n\"size\": 6,\n\"query\": {\n  \"filtered\": {\n    \"filter\": {\n      \"bool\": {\n        \"must\": [\n          {\n            \"bool\": {\n              \"should\": [\n                \"_score\",\n                {\n                  \"nested\": {\n                    \"path\": \"contact\",\n                    \"query\": {\n                      \"term\": {\n                        \"contact.durchwahl\": 1\n                      }\n                    }\n                  }\n                },\n                {\n                  \"nested\": {\n                    \"path\": \"contact\",\n                    \"query\": {\n                      \"term\": {\n                        \"contact.durchwahl\": \"aaa\"\n                      }\n                    }\n                  }\n                },\n                {\n                  \"weight\": 1,\n                  \"filter\": {}\n                }\n              ]\n            }\n          }\n        ]\n      }\n    }\n  }\n}"
   end
 
   def test_json_noindent
     s = TestJSON.new
     s.__markus_indent = false
-    assert s.json_!(:main) == "\"from\": 1,\"size\": 6,\"query\": {\"filtered\": {\"filter\": {\"bool\": {\"must\": [{\"bool\": {\"should\": [\"_score\",{\"nested\": {\"path\": \"contact\",\"query\": {\"term\": {\"contact.durchwahl\": 1}}}},{\"nested\": {\"path\": \"contact\",\"query\": {\"term\": {\"contact.durchwahl\": \"aaa\"}}}}]}}]}}}}"
+    assert s.json_!(:main) == "\"from\": 1,\"size\": 6,\"query\": {\"filtered\": {\"filter\": {\"bool\": {\"must\": [{\"bool\": {\"should\": [\"_score\",{\"nested\": {\"path\": \"contact\",\"query\": {\"term\": {\"contact.durchwahl\": 1}}}},{\"nested\": {\"path\": \"contact\",\"query\": {\"term\": {\"contact.durchwahl\": \"aaa\"}}}},{\"weight\": 1,\"filter\": {}}]}}]}}}}"
   end
 
   def test_json_arguments

@@ -185,9 +185,8 @@ class MarkUS
     @__markus_level += 1
     mpsic = @__markus_parent
 
-    if mpsic == :a
+    if mpsic == :a && !tname.nil?
       @__markus_buffer << __markus_indent + "{"
-      @__markus_level += 1
     end  
 
     if [content, attrs, blk].compact.length > 1
@@ -224,9 +223,8 @@ class MarkUS
       end  
     end
 
-    if mpsic == :a
+    if mpsic == :a && !tname.nil?
       @__markus_buffer.last.chomp!(',')
-      @__markus_level -= 1
       @__markus_buffer << __markus_indent + "},"
     end
 
