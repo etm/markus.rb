@@ -128,7 +128,7 @@ class MarkUS
           }.compact.join(" ")
           attrs = '' if attrs == ' '
         when String
-          content = EscapeUtils.escape_html(a)
+          content = EscapeUtils.escape_html(a).tr("\v",'')
         when Integer
           content = a
       end
@@ -187,7 +187,7 @@ class MarkUS
 
     if mpsic == :a && !tname.nil?
       @__markus_buffer << __markus_indent + "{"
-    end  
+    end
 
     if [content, attrs, blk].compact.length > 1
       @__markus_parent = nil
@@ -218,9 +218,9 @@ class MarkUS
             @__markus_buffer << __markus_indent + "#{type == :a ? ']' : '}'},"
           end
         end
-      else  
+      else
         @__markus_buffer << __markus_indent + "\"#{tname}\": #{attrs || content},"
-      end  
+      end
     end
 
     if mpsic == :a && !tname.nil?
