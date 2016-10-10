@@ -128,7 +128,7 @@ class MarkUS
           }.compact.join(" ")
           attrs = '' if attrs == ' '
         when String
-          content = EscapeUtils.escape_html(a).tr("\v",'')
+          content = EscapeUtils.escape_html(a).tr("\v\u0002\u0019",'')
         when Integer
           content = a
       end
